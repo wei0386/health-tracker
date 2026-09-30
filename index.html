@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康數據追蹤系統</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>健康數據管理</h1>
+        
+        <!-- 新增紀錄區塊 -->
+        <div class="input-section">
+            <input type="text" id="userId" placeholder="代號 / 姓名 (例: 王楷瑋 或 User-001)">
+            <input type="number" id="height" placeholder="身高 (cm)">
+            <input type="number" id="weight" placeholder="體重 (kg)">
+            <button id="addBtn">新增紀錄</button>
+        </div>
+
+        <!-- 狀態篩選與統計區 (預留版位) -->
+        <div class="filter-section">
+            <button class="filter-btn active">全部紀錄</button>
+            <button class="filter-btn">僅顯示需注意</button>
+        </div>
+
+        <!-- 條列式紀錄區 -->
+        <div id="recordList" class="record-list">
+            <!-- 這裡的內容會由 JavaScript 動態產生 -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

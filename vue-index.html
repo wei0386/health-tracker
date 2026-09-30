@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康數據追蹤系統 (Vue版)</title>
+    <!-- 沿用原本寫好的 CSS 檔案 -->
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <!-- Vue 應用程式的作用範圍 -->
+    <div id="app" class="container">
+        <h1>健康數據管理 (Vue.js)</h1>
+        
+        <!-- 新增紀錄區塊 (使用 v-model 綁定資料) -->
+        <div class="input-section">
+            <input type="text" v-model="userId" placeholder="代號 / 姓名 (例: 王楷瑋 或 User-001)">
+            <input type="number" v-model="height" placeholder="身高 (cm)">
+            <input type="number" v-model="weight" placeholder="體重 (kg)">
+            <button @click="addRecord">新增紀錄</button>
+        </div>
+
+        <!-- 狀態篩選 (動態綁定 active 樣式) -->
+        <div class="filter-section">
+            <button class="filter-btn" :class="{ active: filter === 'all' }" @click="filter = 'all'">
+                全部紀錄
+            </button>
+            <button class="filter-btn" :class="{ active: filter === 'warning' }" @click="filter = 'warning'">
+                僅顯示需注意
+            </button>
+        </div>
+
+        <!-- 條列式紀錄區 (使用 v-for 迴圈產生) -->
+        <div class="record-list">
+            <!-- 根據狀態動態加上 active class 來展開 -->
+            <div class="record-item" v-for="record in filteredRecords" :key="record.id" :class="{ active: record.isOpen }">
+                
+                <div class="record-header" @click="record.isOpen = !record.isOpen">
+                    <span>代號: {{ record.userId }}</span>
+                    <span>狀態: {{ record.status }} (BMI: {{ record.bmi }})</span>
+                </div>
+                
+                <div class="record-details">
+                    <p><strong>輸入數據：</strong> 身高 {{ record.height }} cm | 體重 {{ record.weight }} kg</p>
+                    <p><strong>今日專屬健康任務：</strong></p>
+                    
+                    <div class="task-list">
+                        <!-- 任務列表迴圈 -->
+                        <label class="task-item" v-for="(task, index) in record.tasks" :key="index">
+                            <!-- v-model 直接綁定 checkbox 狀態 -->
+                            <input type="checkbox" v-model="task.completed">
+                            <span class="task-text">{{ task.text }}</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 統計區塊 (呼叫 methods 動態計算) -->
+                    <div class="task-stats">
+                        <p class="stats-text">進度：已完成 {{ completedCount(record.tasks) }} / 共 {{ record.tasks.length }} 項</p>
+                        <p class="stats-comment" :style="{ color: getComment(record.tasks).color }">
+                            {{ getComment(record.tasks).text }}
+                        </p>
+                    </div>
+
+                    <button class="delete-btn" @click="deleteRecord(record.id)">刪除此紀錄</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 載入專屬於 Vue 版本的 JS 邏輯 -->
+    <script src="vue-script.js"></script>
+</body>
+</html>
