@@ -32,6 +32,13 @@
             </button>
         </div>
 
+        <!-- ====== 這是新增的：全域任務統計資訊 (永遠存在於畫面上) ====== -->
+        <div class="global-stats">
+            <span>📊 系統統計：目前共 <strong>{{ records.length }}</strong> 筆紀錄</span>
+            <span> | ⚠ 需注意：<strong>{{ warningCount }}</strong> 筆</span>
+        </div>
+        <!-- ========================================================== -->
+
         <!-- 條列式紀錄區 (使用 v-for 迴圈產生) -->
         <div class="record-list">
             <!-- 根據狀態動態加上 active class 來展開 -->
@@ -55,7 +62,7 @@
                         </label>
                     </div>
                     
-                    <!-- 統計區塊 (呼叫 methods 動態計算) -->
+                    <!-- 紀錄內部的進度統計 -->
                     <div class="task-stats">
                         <p class="stats-text">進度：已完成 {{ completedCount(record.tasks) }} / 共 {{ record.tasks.length }} 項</p>
                         <p class="stats-comment" :style="{ color: getComment(record.tasks).color }">
