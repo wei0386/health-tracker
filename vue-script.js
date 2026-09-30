@@ -13,6 +13,22 @@ createApp({
             records: [] 
         };
     },
+    // ====== [新增 1] 網頁剛載入時，從 LocalStorage 把資料讀出來 ======
+    mounted() {
+        const savedData = localStorage.getItem('health-data');
+        if (savedData) {
+            this.records = JSON.parse(savedData);
+        }
+    },
+    // ====== [新增 2] 只要 records 有任何變動，就自動存檔 ======
+    watch: {
+        records: {
+            handler(newRecords) {
+                localStorage.setItem('health-data', JSON.stringify(newRecords));
+            },
+            deep: true // 確保連 checkbox 打勾狀態都會被監聽並存檔
+        }
+    },
     computed: {
         // [任務篩選] 當 filter 或 records 改變時，這裡會自動重新計算顯示的名單
         filteredRecords() {
@@ -20,6 +36,10 @@ createApp({
                 return this.records.filter(r => r.status.includes('⚠️'));
             }
             return this.records;
+        },
+        // ====== [新增 3] 專門計算「需注意(⚠️)」的筆數，給全域統計儀表板使用 ======
+        warningCount() {
+            return this.records.filter(r => r.status.includes('⚠️')).length;
         }
     },
     methods: {
