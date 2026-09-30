@@ -7,28 +7,41 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>健康數據管理</h1>
+    <!-- [語意化] main: 代表網頁的主要內容區域 -->
+    <main class="container">
         
-        <!-- 新增紀錄區塊 -->
-        <div class="input-section">
-            <input type="text" id="userId" placeholder="代號 / 姓名 (例: 王楷瑋 或 User-001)">
+        <!-- [語意化] header: 代表區塊的標題或頁首 -->
+        <header>
+            <h1>健康數據管理</h1>
+        </header>
+        
+        <!-- [語意化] section: 代表一個具有獨立主題的區塊 -->
+        <section class="input-section">
+            <input type="text" id="userId" placeholder="代號 / 姓名 (例: 王楷瑋)">
             <input type="number" id="height" placeholder="身高 (cm)">
             <input type="number" id="weight" placeholder="體重 (kg)">
+            <!-- [語意化] button: 代表按鈕 -->
             <button id="addBtn">新增紀錄</button>
-        </div>
+        </section>
 
-        <!-- 狀態篩選與統計區 (預留版位) -->
-        <div class="filter-section">
+        <!-- 狀態篩選區 -->
+        <section class="filter-section">
             <button class="filter-btn active">全部紀錄</button>
             <button class="filter-btn">僅顯示需注意</button>
-        </div>
+        </section>
+
+        <!-- 全域任務統計資訊 -->
+        <section class="global-stats">
+            <span>📊 系統統計：目前共 <strong id="totalCount">0</strong> 筆紀錄</span>
+            <span> | ⚠ 需注意：<strong id="warningCount">0</strong> 筆</span>
+        </section>
 
         <!-- 條列式紀錄區 -->
-        <div id="recordList" class="record-list">
+        <section id="recordList" class="record-list">
             <!-- 這裡的內容會由 JavaScript 動態產生 -->
-        </div>
-    </div>
+        </section>
+
+    </main>
 
     <script src="script.js"></script>
 </body>
